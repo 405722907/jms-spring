@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--生产者,消费者公共配置部分-->
+
+    <!--开启注解-->
+    <context:annotation-config></context:annotation-config>
+
+    <!--activeMQ为我们提供的连接池-->
+    <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://192.168.1.138:61616"></property>
+    </bean>
+
+    <!--spring-jms为我们提供的连接池-->
+    <bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
+        <property name="targetConnectionFactory" ref="targetConnectionFactory"></property>
+    </bean>
+
+    <!--消息发送和接收的目的地,队列模式-->
+    <bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
+        <!--通过构造方法设置-->
+        <constructor-arg value="queue"></constructor-arg>
+    </bean>
+
+
+
+
+
+</beans>
