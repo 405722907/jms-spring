@@ -31,7 +31,10 @@ public class ProducerServiceImpl implements ProducerService{
             public Message createMessage(Session session) throws JMSException {
 
                 File file = new File("D:\\wbz.jpeg");
+
                 ObjectMessage objectMessage = session.createObjectMessage(file);
+
+                //通过setXXXProperty方法可以向消息中存储信息一起传递, 类似Map,在接收方通过getXXXProperty获取
                 objectMessage.setStringProperty("FILE.NAME", file.getName()); //文件名称
                 objectMessage.setLongProperty("FILE.LENGTH", file.length()); //文件长度
 

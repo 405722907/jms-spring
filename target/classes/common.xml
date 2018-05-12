@@ -9,9 +9,22 @@
     <!--开启注解-->
     <context:annotation-config></context:annotation-config>
 
+
+
+    <!--spring的属性加载器，加载properties文件中的属性-->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>config.properties</value>
+        </property>
+        <property name="fileEncoding" value="utf-8"/>
+    </bean>
+
+
+
     <!--activeMQ为我们提供的连接池-->
     <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-        <property name="brokerURL" value="tcp://192.168.1.138:61616"></property>
+        <!--注意,此处要在url路径中标明为tcp协议,如果不写,则程序启动会报错-->
+        <property name="brokerURL" value="${mq.url}"></property>
     </bean>
 
     <!--spring-jms为我们提供的连接池-->

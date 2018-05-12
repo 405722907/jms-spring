@@ -15,26 +15,33 @@ public class ConsumerMessageListener implements MessageListener{
     @Override
     public void onMessage(Message message) {
 
-
-        ObjectMessage objectMessage = (ObjectMessage) message;
         try {
-            File file = (File) objectMessage.getObject();
-            System.out.println(file.getName());
-
-            FileInputStream fis = new FileInputStream(file);
-            FileOutputStream fos = new FileOutputStream(new File("E:\\" + file.getName()));
-            byte[] b = new byte[1024];
-            int len;
-            while ( (len = fis.read(b)) != - 1){
-                fos.write(b, 0, len);
-            }
-
-            fos.close();;
-            fis.close();
-
-        } catch (Exception e) {
+            TextMessage textMessagesage = (TextMessage) message;
+            String text = textMessagesage.getText();
+            System.out.println(text);
+        } catch (JMSException e) {
             e.printStackTrace();
         }
+
+//        ObjectMessage objectMessage = (ObjectMessage) message;
+//        try {
+//            File file = (File) objectMessage.getObject();
+//            System.out.println(file.getName());
+//
+//            FileInputStream fis = new FileInputStream(file);
+//            FileOutputStream fos = new FileOutputStream(new File("E:\\" + file.getName()));
+//            byte[] b = new byte[1024];
+//            int len;
+//            while ( (len = fis.read(b)) != - 1){
+//                fos.write(b, 0, len);
+//            }
+//
+//            fos.close();;
+//            fis.close();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
     }
 
