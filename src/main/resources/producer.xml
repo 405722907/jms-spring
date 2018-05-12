@@ -12,6 +12,7 @@
     </bean>
 
     <!--注入bean,交由Spring管理-->
+    <!--注意：注入的是其实现类-->
     <bean id="producerService" class="com.imooc.jms.producer.ProducerServiceImpl"></bean>
 
 

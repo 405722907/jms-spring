@@ -6,4 +6,5 @@ package com.imooc.jms.producer;
 public interface ProducerService {
     //发送消息
     void sendMessage(String message);
+
 }

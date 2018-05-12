@@ -1,9 +1,11 @@
 package com.imooc.jms.consumer;
 
-import javax.jms.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import com.imooc.jms.util.Tools;
+
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageListener;
+import javax.jms.ObjectMessage;
 
 /**
  * 消息监听容器
@@ -16,33 +18,21 @@ public class ConsumerMessageListener implements MessageListener{
     public void onMessage(Message message) {
 
         try {
-            TextMessage textMessagesage = (TextMessage) message;
-            String text = textMessagesage.getText();
-            System.out.println(text);
+            //将接收到的消息强转为ObjectMessage类型
+            ObjectMessage objectMessage = (ObjectMessage) message;
+            System.out.println("接收到了文件:" + objectMessage.getStringProperty("FILE.NAME") + "...文件大小:" + objectMessage.getStringProperty("FILE.LENGTH"));
+
+            String tempPath = "C:\\mytest";
+//            File file = new File(tempPath);
+//            if(!file.exists() || !file.isDirectory()){
+//                file.mkdirs();
+//            }
+            byte[] bytes = (byte[]) objectMessage.getObject();
+            //将文件存放到C:/mytest路径下
+            Tools.getFile(bytes, tempPath ,objectMessage.getStringProperty("FILE.NAME"));
         } catch (JMSException e) {
             e.printStackTrace();
         }
-
-//        ObjectMessage objectMessage = (ObjectMessage) message;
-//        try {
-//            File file = (File) objectMessage.getObject();
-//            System.out.println(file.getName());
-//
-//            FileInputStream fis = new FileInputStream(file);
-//            FileOutputStream fos = new FileOutputStream(new File("E:\\" + file.getName()));
-//            byte[] b = new byte[1024];
-//            int len;
-//            while ( (len = fis.read(b)) != - 1){
-//                fos.write(b, 0, len);
-//            }
-//
-//            fos.close();;
-//            fis.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
     }
 
 }
